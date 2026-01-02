@@ -74,7 +74,11 @@ export default function QuizPage() {
 
       </div>
       <button
-        disabled={selectedOption === null}
+        disabled={
+          currentQuestion.isMultipleChoice
+            ? selectedOption === null
+            : textAnswer.trim() === ""
+        }
         onClick={handleNext}
         className="bg-green-400 text-white px-4 py-2 rounded-2xl mt-4 hover:bg-green-700 disabled:opacity-50"
       >
