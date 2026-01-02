@@ -90,7 +90,7 @@ export default function AddQuestionPage() {
     return (
         <div>
             <button onClick={() => setOpen(true)} className="bg-yellow-300 text-white px-3 py-2 rounded-2xl hover:bg-yellow-600 m-4">+ Add Question</button>
-            <table>
+            <table className="w-full text-center text-2xl">
                 <thead>
                     <tr>
                         <th className="border px-4 py-2">ID</th>
@@ -119,7 +119,7 @@ export default function AddQuestionPage() {
                 </tbody>
             </table>
             {open && (
-                <form className="w-[570px] mx-auto flex flex-col bg-gray-200 rounded-2xl fixed top-20 left-72 justify-center" onSubmit={handleAddQuestion}>
+                <form className="w-[570px] mx-auto flex flex-col bg-gray-200 rounded-2xl fixed inset-0 top-10 h-[500px]" onSubmit={handleAddQuestion}>
                     <h1 className="text-3xl font-bold mb-4 text-center">Add New Question</h1>
                     <div className="mb-4 flex items-center gap-4">
                         <label className="block mb-2 mx-3">Question:</label>
