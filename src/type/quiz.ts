@@ -2,11 +2,9 @@ export interface Quiz {
   id?: string
   question: string
   isMultipleChoice: boolean
-
   // trắc nghiệm
   options?: string[]
   correctAnswer?: number
-
   // tự luận
   correctTextAnswer?: string
 }
