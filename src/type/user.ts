@@ -1,9 +1,10 @@
 // src/type/user.ts
+
 export interface User {
-  id: string
+  id?: string
   username: string
   password: string
-  role: "user" | "admin"
+  role: "admin" | "user"
 }
 
 export const USER_API =

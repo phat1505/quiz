@@ -11,11 +11,14 @@ export default function AddQuestionPage() {
     const [correctAnswer, setCorrectAnswer] = useState<number | null>(null)
     const [textAnswer, setTextAnswer] = useState("")
     const [isMultipleChoice, setIsMultipleChoice] = useState(true)
+    const [category, setCategory] = useState("")
     const isValid = isMultipleChoice
         ? question.trim() !== "" &&
+        category.trim() !== "" &&
         mcOptions.every(opt => opt.trim() !== "") &&
         correctAnswer !== null
         : question.trim() !== "" &&
+        category.trim() !== "" &&
         textAnswer.trim() !== ""
 
 
@@ -63,12 +66,14 @@ export default function AddQuestionPage() {
         const newQuestion: Quiz = isMultipleChoice
             ? {
                 question,
+                category,
                 isMultipleChoice: true,
                 options: mcOptions,
                 correctAnswer: correctAnswer!,
             }
             : {
                 question,
+                category,
                 isMultipleChoice: false,
                 correctTextAnswer: textAnswer,
             }
@@ -209,6 +214,15 @@ export default function AddQuestionPage() {
                         </div>
                     )}
 
+                    <div className="mt-4">
+                        <label>Category:</label>
+                        <input
+                            type="text"
+                            className="border p-2 rounded-xl w-full"
+                            value={category}
+                            onChange={e => setCategory(e.target.value)}
+                        />
+                    </div>
 
                     <div className="flex mx-auto">
                         <button type="button" disabled={!isValid} onClick={handleAddQuestion} className="bg-cyan-400 text-white w-32 mx-auto mt-2 p-2 rounded-full hover:bg-cyan-600">Add Question</button>

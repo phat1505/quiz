@@ -11,15 +11,18 @@ export default function QuizPage() {
   const [textAnswer, setTextAnswer] = useState("")
   const [started, setStarted] = useState(false)
   const [timeLeft, setTimeLeft] = useState(20)
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
+  const categories = [...new Set(questions.map(q => q.category))]
   useEffect(() => {
     fetch(API_URL)
       .then(res => res.json())
       .then(setQuestions)
   }, [])
-
-  const currentQuestion = questions[currentIndex]
-
+  const filteredQuestions = questions.filter(
+    q => q.category === selectedCategory
+  )
+  const currentQuestion = filteredQuestions[currentIndex]
   // ===== TIMER =====
   useEffect(() => {
     if (!started || showScore) return
@@ -69,6 +72,28 @@ export default function QuizPage() {
   // ===== LOADING =====
   if (questions.length === 0) {
     return <p className="text-center">Loading...</p>
+  }
+  if (!selectedCategory) {
+    return (
+      <div className="flex flex-col items-center mt-20 gap-4">
+        <h1 className="text-3xl font-bold">Choose Category</h1>
+
+        {categories.map(cat => (
+          <button
+            key={cat}
+            onClick={() => {
+              setSelectedCategory(cat)
+              setStarted(false)
+              setCurrentIndex(0)
+              setScore(0)
+            }}
+            className="bg-blue-500 text-white px-6 py-2 rounded-xl"
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    )
   }
 
   // ===== START SCREEN =====

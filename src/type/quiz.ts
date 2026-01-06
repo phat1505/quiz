@@ -7,6 +7,8 @@ export interface Quiz {
   correctAnswer?: number
   // tự luận
   correctTextAnswer?: string
+
+  category: string
 }
 
 
