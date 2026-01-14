@@ -5,8 +5,11 @@ import QuizPage from "./pages/QuizPage"
 import AddQuestionPage from "./pages/AddQuestionPage"
 import type { User } from "./type/user"
 import RegisterPage from "./pages/RegisterPage"
+import ScorePage from "./pages/ScorePage"
 export default function App() {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>(
+    JSON.parse(localStorage.getItem("user") || "null")
+  )
 
   useEffect(() => {
     const stored = localStorage.getItem("user")
@@ -35,7 +38,7 @@ export default function App() {
               Add Question
             </Link>
           )}
-          
+          <Link to="/score" className="bg-amber-300 px-3 py-2 rounded-2xl">Score</Link>
           <button
             onClick={logout}
             className="bg-gray-500 px-3 py-2 rounded-2xl"
@@ -57,6 +60,7 @@ export default function App() {
         {user && (
           <>
             <Route path="/quiz" element={<QuizPage />} />
+            <Route path="/score" element={<ScorePage />} />
             {user.role === "admin" && (
               <Route path="/add-question" element={<AddQuestionPage />} />
             )}

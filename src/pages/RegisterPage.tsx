@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
-import { USER_API } from "../type/user"
+import { REGISTER_API, USER_API } from "../type/user"
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("")
@@ -25,7 +25,7 @@ export default function RegisterPage() {
     }
 
     // tạo user mới
-    await fetch(USER_API, {
+    await fetch(REGISTER_API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

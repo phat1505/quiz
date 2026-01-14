@@ -38,6 +38,7 @@ export default function AddQuestionPage() {
         }
 
         setQuestion(editingQuestion.question)
+        setCategory(editingQuestion.category)
         setIsMultipleChoice(editingQuestion.isMultipleChoice)
 
         if (editingQuestion.isMultipleChoice) {
@@ -63,35 +64,44 @@ export default function AddQuestionPage() {
         e.preventDefault()
         if (!isValid) return
 
-        const newQuestion: Quiz = isMultipleChoice
+        const payload = isMultipleChoice
             ? {
                 question,
                 category,
                 isMultipleChoice: true,
                 options: mcOptions,
-                correctAnswer: correctAnswer!,
+                correctAnswer
             }
             : {
                 question,
                 category,
                 isMultipleChoice: false,
-                correctTextAnswer: textAnswer,
+                correctTextAnswer: textAnswer
             }
 
-        await fetch(API_URL, {
-            method: "POST",
+        const url = editingQuestion
+            ? `${API_URL}/${editingQuestion.id}`
+            : API_URL
+
+        const method = editingQuestion ? "PUT" : "POST"
+
+        await fetch(url, {
+            method,
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newQuestion)
+            body: JSON.stringify(payload)
         })
 
-        alert("Question added!")
+        alert(editingQuestion ? "Updated successfully!" : "Added successfully!")
         fetchQuestions()
         setOpen(false)
+        setEditingQuestion(null)
         resetForm()
     }
 
 
-    const hanldeDeleteQuestion = async (id?: string) => {
+
+
+    const hanldeDeleteQuestion = async (id?: number) => {
         if (!confirm("Are you sure you want to delete this question:")) return
 
         await fetch(`${API_URL}/${id}`, {
@@ -225,7 +235,14 @@ export default function AddQuestionPage() {
                     </div>
 
                     <div className="flex mx-auto">
-                        <button type="button" disabled={!isValid} onClick={handleAddQuestion} className="bg-cyan-400 text-white w-32 mx-auto mt-2 p-2 rounded-full hover:bg-cyan-600">Add Question</button>
+                        <button
+                            type="submit"
+                            disabled={!isValid}
+                            className="bg-cyan-400 text-white w-32 mx-auto mt-2 p-2 rounded-full hover:bg-cyan-600"
+                        >
+                            {editingQuestion ? "Update" : "Add"}
+                        </button>
+
                         <button type="button" onClick={() => {
                             setOpen(false)
                             setEditingQuestion(null)

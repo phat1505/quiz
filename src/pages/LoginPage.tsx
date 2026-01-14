@@ -62,7 +62,6 @@ export default function LoginPage({ onLogin }: Props) {
                     Register
                 </Link>
             </p>
-
         </div>
     )
 }

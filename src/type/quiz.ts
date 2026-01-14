@@ -1,5 +1,5 @@
 export interface Quiz {
-  id?: string
+  id: number
   question: string
   isMultipleChoice: boolean
   // trắc nghiệm
@@ -12,4 +12,4 @@ export interface Quiz {
 }
 
 
-export const API_URL = 'https://6954c2091cd5294d2c7d6378.mockapi.io/api/quiz/questions'
+export const API_URL = 'http://localhost:3001/api/quizzes'
